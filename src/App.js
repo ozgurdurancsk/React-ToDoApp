@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css"
 import {AiOutlineDelete} from "react-icons/ai"
 import {BsCheckLg} from "react-icons/bs"
+import { useEffect } from "react";
 
 
 function App() {
@@ -16,11 +17,19 @@ function App() {
       title:newTitle,
       description:newDescription
     }
-    let updateTodoArr = [...allTodos];
+    let updatedTodoArr = [...allTodos];
     updatedTodoArr.push(newTodoItem)
-    setTodos(updateedTodoArr);
-
+    setTodos(updatedTodoArr);
+    localStorage.setItem("todolist",JSON.stringify(updatedTodoArr));
   }
+  useEffect(()=>{
+    let savedTodo = JSON.parse(localStorage.getItem('todolist'));
+    if(savedTodo){
+      setTodos(savedTodo);
+
+    }
+  },[])
+
   return (
    <div className="App">
     <h1>My Todos</h1>
